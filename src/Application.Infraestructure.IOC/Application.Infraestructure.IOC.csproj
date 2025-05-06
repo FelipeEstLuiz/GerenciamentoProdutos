@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net9.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<ExcludeFromCodeCoverage>true</ExcludeFromCodeCoverage>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.11.0" />		
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\Application.Core\Application.Core.csproj" />
+		<ProjectReference Include="..\Application.Domain\Application.Domain.csproj" />
+		<ProjectReference Include="..\Application.Infraestructure.Data\Application.Infraestructure.Data.csproj" />
+	</ItemGroup>
+
+</Project>
