@@ -15,7 +15,7 @@ public class UpdateProdutoValidatorTests
     public void Deve_Falhar_Se_Id_Eh_Invalido()
     {
         // Arrange
-        UpdateProdutoCommand command = new("Produto Teste", "Descricao", 100.50m, 10, 1, StatusProduto.Disponivel, DateTime.UtcNow)
+        UpdateProdutoCommand command = new("Produto Teste", "Descricao", 100.50m, 10, 1, DateTime.UtcNow)
         {
             Id = 0
         };
@@ -32,7 +32,7 @@ public class UpdateProdutoValidatorTests
     public void Deve_Falhar_Se_Nome_Eh_Nulo_Ou_Vazio()
     {
         // Arrange
-        UpdateProdutoCommand command = new(null, "Descricao", 100.50m, 10, 1, StatusProduto.Disponivel, DateTime.UtcNow)
+        UpdateProdutoCommand command = new(null, "Descricao", 100.50m, 10, 1, DateTime.UtcNow)
         {
             Id = 1
         };
@@ -48,7 +48,7 @@ public class UpdateProdutoValidatorTests
     public void Deve_Falhar_Se_Nome_Tem_Tamanho_Invalido()
     {
         // Arrange
-        UpdateProdutoCommand command = new("A", "Descricao", 100.50m, 10, 1, StatusProduto.Disponivel, DateTime.UtcNow)
+        UpdateProdutoCommand command = new("A", "Descricao", 100.50m, 10, 1, DateTime.UtcNow)
         {
             Id = 1
         };
@@ -64,7 +64,7 @@ public class UpdateProdutoValidatorTests
     public void Deve_Passar_Se_Nome_Eh_Valido()
     {
         // Arrange
-        UpdateProdutoCommand command = new("Produto Teste", "Descricao", 100.50m, 10, 1, StatusProduto.Disponivel, DateTime.UtcNow)
+        UpdateProdutoCommand command = new("Produto Teste", "Descricao", 100.50m, 10, 1, DateTime.UtcNow)
         {
             Id = 1
         };
@@ -80,7 +80,7 @@ public class UpdateProdutoValidatorTests
     public void Deve_Falhar_Se_Descricao_Tem_Tamanho_Invalido()
     {
         // Arrange
-        UpdateProdutoCommand command = new("Produto Teste", "A", 100.50m, 10, 1, StatusProduto.Disponivel, DateTime.UtcNow)
+        UpdateProdutoCommand command = new("Produto Teste", "A", 100.50m, 10, 1, DateTime.UtcNow)
         {
             Id = 1
         };
@@ -96,7 +96,7 @@ public class UpdateProdutoValidatorTests
     public void Deve_Passar_Se_Descricao_Eh_Valida()
     {
         // Arrange
-        UpdateProdutoCommand command = new("Produto Teste", "Descricao Valida", 100.50m, 10, 1, StatusProduto.Disponivel, DateTime.UtcNow)
+        UpdateProdutoCommand command = new("Produto Teste", "Descricao Valida", 100.50m, 10, 1, DateTime.UtcNow)
         {
             Id = 1
         };
@@ -112,7 +112,7 @@ public class UpdateProdutoValidatorTests
     public void Deve_Falhar_Se_Valor_Eh_Nulo_Ou_Menor_Igual_A_Zero()
     {
         // Arrange
-        UpdateProdutoCommand command = new("Produto Teste", "Descricao", 0, 10, 1, StatusProduto.Disponivel, DateTime.UtcNow)
+        UpdateProdutoCommand command = new("Produto Teste", "Descricao", 0, 10, 1, DateTime.UtcNow)
         {
             Id = 1
         };
@@ -128,7 +128,7 @@ public class UpdateProdutoValidatorTests
     public void Deve_Passar_Se_Valor_Eh_Valido()
     {
         // Arrange
-        UpdateProdutoCommand command = new("Produto Teste", "Descricao", 100.50m, 10, 1, StatusProduto.Disponivel, DateTime.UtcNow)
+        UpdateProdutoCommand command = new("Produto Teste", "Descricao", 100.50m, 10, 1, DateTime.UtcNow)
         {
             Id = 1
         };
@@ -144,7 +144,7 @@ public class UpdateProdutoValidatorTests
     public void Deve_Falhar_Se_DataUltimaVenda_Eh_Futura()
     {
         // Arrange
-        UpdateProdutoCommand command = new("Produto Teste", "Descricao", 100.50m, 10, 1, StatusProduto.Disponivel, DateTime.UtcNow.AddDays(1))
+        UpdateProdutoCommand command = new("Produto Teste", "Descricao", 100.50m, 10, 1, DateTime.UtcNow.AddDays(1))
         {
             Id = 1
         };
@@ -160,7 +160,7 @@ public class UpdateProdutoValidatorTests
     public void Deve_Passar_Se_DataUltimaVenda_Eh_Valida()
     {
         // Arrange
-        UpdateProdutoCommand command = new("Produto Teste", "Descricao", 100.50m, 10, 1, StatusProduto.Disponivel, DateTime.UtcNow.AddDays(-1))
+        UpdateProdutoCommand command = new("Produto Teste", "Descricao", 100.50m, 10, 1, DateTime.UtcNow.AddDays(-1))
         {
             Id = 1
         };

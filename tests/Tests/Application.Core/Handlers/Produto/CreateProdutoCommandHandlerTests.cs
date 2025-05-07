@@ -43,7 +43,7 @@ public class CreateProdutoCommandHandlerTests
         CreateProdutoCommand command = new("Produto Existente", "Descrição", 100.50m, 10, 1);
 
         _produtoRepositoryMock
-            .GetByNameAsync(command.Nome!, Arg.Any<CancellationToken>())
+            .GetAllAsync(Arg.Any<int?>(), command.Nome!, Arg.Any<CancellationToken>())
             .Returns([CriarProduto.CriarProdutoTeste()]);
 
         // Act
@@ -61,7 +61,7 @@ public class CreateProdutoCommandHandlerTests
         CreateProdutoCommand command = new("Produto Novo", "Descrição", 100.50m, 10, 999); // Categoria inválida
 
         _produtoRepositoryMock
-            .GetByNameAsync(command.Nome!, Arg.Any<CancellationToken>())
+            .GetAllAsync(Arg.Any<int?>(), command.Nome!, Arg.Any<CancellationToken>())
             .Returns([]);
 
         _categoriaCacheServiceMock
@@ -85,7 +85,7 @@ public class CreateProdutoCommandHandlerTests
         List<CategoriaProduto> categorias = CriarCategoria.CriarCategorias(1);
 
         _produtoRepositoryMock
-            .GetByNameAsync(command.Nome!, Arg.Any<CancellationToken>())
+            .GetAllAsync(Arg.Any<int?>(), command.Nome!, Arg.Any<CancellationToken>())
             .Returns([]);
 
         _categoriaCacheServiceMock

@@ -11,7 +11,6 @@ public record UpdateProdutoCommand(
     decimal? Valor,
     int? QuantidadeEstoque,
     int? Categoria,
-    StatusProduto? Status,
     DateTime? DataUltimaVenda
 ) : IRequest<Result<ProdutoVo>>
 {

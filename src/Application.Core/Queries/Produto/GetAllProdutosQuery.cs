@@ -4,4 +4,4 @@ using MediatR;
 
 namespace Application.Core.Queries.Produto;
 
-public record GetAllProdutosQuery() : IRequest<Result<IEnumerable<ProdutoVo>>>;
+public record GetAllProdutosQuery(int? IdCategoria, string? Nome) : IRequest<Result<IEnumerable<ProdutoVo>>>;

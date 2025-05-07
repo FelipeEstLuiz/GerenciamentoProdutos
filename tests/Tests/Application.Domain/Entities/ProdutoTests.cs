@@ -48,11 +48,11 @@ public class ProdutoTests
         decimal novoValor = 200.00m;
         int novaQuantidadeEstoque = 20;
         int novaCategoria = 2;
-        StatusProduto novoStatus = StatusProduto.ForaEstoque;
         DateTime? novaDataUltimaVenda = DateTime.UtcNow.AddDays(-61);
+        StatusProduto statusProduto = StatusProduto.Disponivel;
 
         // Act
-        produto.Update(novoNome, novaDescricao, novoValor, novaQuantidadeEstoque, novaCategoria, novoStatus, novaDataUltimaVenda);
+        produto.Update(novoNome, novaDescricao, novoValor, novaQuantidadeEstoque, novaCategoria, statusProduto, novaDataUltimaVenda);
 
         // Assert
         Assert.Equal(novoNome, produto.Nome);
@@ -60,8 +60,8 @@ public class ProdutoTests
         Assert.Equal(novoValor, produto.Valor);
         Assert.Equal(novaQuantidadeEstoque, produto.QuantidadeEstoque);
         Assert.Equal(novaCategoria, produto.IdCategoria);
-        Assert.Equal(novoStatus, produto.CodigoStatusProduto);
         Assert.Equal(novaDataUltimaVenda, produto.DataUltimaVenda);
+        Assert.Equal(statusProduto, produto.CodigoStatusProduto);
     }
 
     [Fact]

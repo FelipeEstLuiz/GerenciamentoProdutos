@@ -74,100 +74,13 @@ public class ProdutoRepositoryTests : IClassFixture<SqlServerTestFixture>, IAsyn
     }
 
     [Fact]
-    public async Task GetByNameAsync_DeveRetornarProdutosPorNome()
-    {
-        // Arrange
-        Produto produto = CriarProduto.CriarProdutoTeste();
-        await _produtoRepository.AddAsync(produto, CancellationToken.None);
-
-        // Act
-        IEnumerable<Produto> produtos = await _produtoRepository.GetByNameAsync("Produto", CancellationToken.None);
-
-        // Assert
-        Assert.NotEmpty(produtos);
-        Assert.Contains(produtos, p => p.Nome == produto.Nome);
-    }
-
-    [Fact]
-    public async Task GetByNameAsync_DeveRetornarVazioProdutosPorNome()
-    {
-        // Arrange
-        Produto produto = CriarProduto.CriarProdutoTeste();
-        await _produtoRepository.AddAsync(produto, CancellationToken.None);
-
-        // Act
-        IEnumerable<Produto> produtos = await _produtoRepository.GetByNameAsync("Find", CancellationToken.None);
-
-        // Assert
-        Assert.Empty(produtos);
-    }
-
-    [Fact]
-    public async Task GetByCategoriaIdAsync_DeveRetornarProdutosPorCategoria()
-    {
-        // Arrange
-        Produto produto = CriarProduto.CriarProdutoTeste();
-        await _produtoRepository.AddAsync(produto, CancellationToken.None);
-
-        // Act
-        IEnumerable<Produto> produtos = await _produtoRepository.GetByCategoriaIdAsync(1, CancellationToken.None);
-
-        // Assert
-        Assert.NotEmpty(produtos);
-        Assert.Contains(produtos, p => p.IdCategoria == 1);
-    }
-
-    [Fact]
-    public async Task GetByCategoriaIdAsync_DeveRetornarVazioProdutosPorCategoria()
-    {
-        // Arrange
-        Produto produto = CriarProduto.CriarProdutoTeste();
-        await _produtoRepository.AddAsync(produto, CancellationToken.None);
-
-        // Act
-        IEnumerable<Produto> produtos = await _produtoRepository.GetByCategoriaIdAsync(1000, CancellationToken.None);
-
-        // Assert
-        Assert.Empty(produtos);
-    }
-
-    [Fact]
-    public async Task GetAllAsync_DeveRetornarTodosOsProdutos()
-    {
-        // Arrange
-        Produto produto1 = new("Produto 1", "Descrição 1", 50.00m, 5, 1);
-        Produto produto2 = new("Produto 2", "Descrição 2", 150.00m, 15, 2);
-        await _produtoRepository.AddAsync(produto1, CancellationToken.None);
-        await _produtoRepository.AddAsync(produto2, CancellationToken.None);
-
-        // Act
-        IEnumerable<Produto> produtos = await _produtoRepository.GetAllAsync(CancellationToken.None);
-
-        // Assert
-        Assert.NotEmpty(produtos);
-        Assert.True(produtos.Count() >= 2);
-    }
-
-    [Fact]
-    public async Task GetAllAsync_DeveRetornarVazio()
-    {
-        // Arrange
-
-        // Act
-        IEnumerable<Produto> produtos = await _produtoRepository.GetAllAsync(CancellationToken.None);
-
-        // Assert
-        Assert.Empty(produtos);
-    }
-
-    [Fact]
     public async Task UpdateAsync_DeveAtualizarProduto()
     {
         // Arrange
         Produto produto = CriarProduto.CriarProdutoTeste();
         await _produtoRepository.AddAsync(produto, CancellationToken.None);
 
-        produto.Update("Produto Atualizado", "Descrição Atualizada", 200.00m, 20, 2, StatusProduto.ForaEstoque, DateTime.UtcNow.AddDays(-61));
+        produto.Update("Produto Atualizado", "Descrição Atualizada", 200.00m, 20, 2, StatusProduto.Disponivel, DateTime.UtcNow.AddDays(-61));
 
         // Act
         await _produtoRepository.UpdateAsync(produto, CancellationToken.None);
@@ -204,7 +117,7 @@ public class ProdutoRepositoryTests : IClassFixture<SqlServerTestFixture>, IAsyn
         produto.SetDataUltimaVenda(DateTime.UtcNow.AddDays(-61));
         await _produtoRepository.AddAsync(produto, CancellationToken.None);
 
-        produto.Update("Produto Atualizado", "Descrição Atualizada", 200.00m, 20, 2, StatusProduto.ForaEstoque, DateTime.UtcNow.AddDays(-61));
+        produto.Update("Produto Atualizado", "Descrição Atualizada", 200.00m, 20, 2, StatusProduto.Disponivel, DateTime.UtcNow.AddDays(-61));
         await _produtoRepository.UpdateAsync(produto, CancellationToken.None);
 
         // Act

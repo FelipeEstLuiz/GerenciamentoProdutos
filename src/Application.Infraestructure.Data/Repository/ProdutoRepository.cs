@@ -49,56 +49,36 @@ public class ProdutoRepository(
         }
     }
 
-    public async Task<IEnumerable<Produto>> GetByNameAsync(string nome, CancellationToken cancellationToken)
+    public async Task<IEnumerable<Produto>> GetAllAsync(int? idCategoria, string? nome, CancellationToken cancellationToken)
     {
-        const string query = QueryBase + " WHERE Nome LIKE @Nome ";
-
         try
         {
+            string query = QueryBase;
+
+            List<string> parametros = [];
+            DynamicParameters dynamicParameters = new();
+
+            if(idCategoria.HasValue)
+            {
+                parametros.Add("IdCategoria = @IdCategoria");
+                dynamicParameters.Add("IdCategoria", idCategoria.Value);
+            }
+
+            if (!string.IsNullOrEmpty(nome))
+            {
+                parametros.Add("Nome LIKE @Nome");
+                dynamicParameters.Add("Nome", $"%{nome}%");
+            }
+
+            if(parametros.Any())
+                query += " WHERE " + string.Join(" AND ", parametros);
+
             using IDbConnection connection = dbConnectionFactory.CreateConnection();
             return await connection.QueryAsync<Produto>(new CommandDefinition(
                 query,
-                new
-                {
-                    Nome = $"%{nome}%"
-                }, cancellationToken: cancellationToken
+                dynamicParameters,
+                cancellationToken: cancellationToken
             ));
-        }
-        catch (Exception ex)
-        {
-            logger.LogError(ex, "Erro ao obter o produto");
-            throw new ValidacaoException("Erro ao obter o produto");
-        }
-    }
-
-    public async Task<IEnumerable<Produto>> GetByCategoriaIdAsync(int id, CancellationToken cancellationToken)
-    {
-        const string query = QueryBase + " WHERE IdCategoria = @Id ";
-
-        try
-        {
-            using IDbConnection connection = dbConnectionFactory.CreateConnection();
-            return await connection.QueryAsync<Produto>(new CommandDefinition(
-                query,
-                new
-                {
-                    Id = id
-                }, cancellationToken: cancellationToken
-            ));
-        }
-        catch (Exception ex)
-        {
-            logger.LogError(ex, "Erro ao obter o produto");
-            throw new ValidacaoException("Erro ao obter o produto");
-        }
-    }
-
-    public async Task<IEnumerable<Produto>> GetAllAsync(CancellationToken cancellationToken)
-    {
-        try
-        {
-            using IDbConnection connection = dbConnectionFactory.CreateConnection();
-            return await connection.QueryAsync<Produto>(new CommandDefinition(QueryBase, cancellationToken: cancellationToken));
         }
         catch (Exception ex)
         {

@@ -1,0 +1,94 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()" class="product-form">
+
+  <!-- Campos só na edição -->
+    <mat-form-field appearance="outline" *ngIf="isEdit">
+      <mat-label>ID</mat-label>
+      <input matInput [value]="form.get('id')?.value" disabled>
+    </mat-form-field>
+    
+    <mat-form-field appearance="outline" *ngIf="isEdit">
+      <mat-label>Data de Cadastro</mat-label>
+      <input matInput [value]="form.get('dataCadastro')?.value | date:'dd/MM/yyyy HH:mm:ss'" disabled>
+    </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Nome</mat-label>
+    <input matInput formControlName="nome" required minlength="5" maxlength="250">
+    <mat-error *ngIf="form.get('nome')?.hasError('required')">
+      Nome é obrigatório
+    </mat-error>
+    <mat-error *ngIf="form.get('nome')?.hasError('minlength')">
+      Nome deve ter no mínimo 5 caracteres
+    </mat-error>
+    <mat-error *ngIf="form.get('nome')?.hasError('maxlength')">
+      Nome deve ter no máximo 250 caracteres
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Descrição</mat-label>
+    <input matInput formControlName="descricao" minlength="5" maxlength="800">
+    <mat-error *ngIf="form.get('descricao')?.hasError('minlength')">
+      Descrição deve ter no mínimo 5 caracteres
+    </mat-error>
+    <mat-error *ngIf="form.get('descricao')?.hasError('maxlength')">
+      Descrição deve ter no máximo 800 caracteres
+    </mat-error>
+  </mat-form-field>  
+
+  <mat-form-field appearance="outline">
+    <mat-label>Valor</mat-label>
+    <input matInput type="number" formControlName="valor" required step="0.01" min="0.01">
+    <mat-error *ngIf="form.get('valor')?.hasError('required')">
+      Valor é obrigatório
+    </mat-error>
+    <mat-error *ngIf="form.get('valor')?.hasError('min')">
+      Valor deve ser maior que zero
+    </mat-error>
+    <mat-error *ngIf="form.get('valor')?.hasError('decimalPlaces')">
+      Valor deve ter no máximo 2 casas decimais
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Quantidade em Estoque</mat-label>
+    <input matInput type="number" formControlName="quantidadeEstoque" required min="0" step="1">
+    <mat-error *ngIf="form.get('quantidadeEstoque')?.hasError('required')">
+      Quantidade é obrigatória
+    </mat-error>
+    <mat-error *ngIf="form.get('quantidadeEstoque')?.hasError('min')">
+      Quantidade deve ser maior ou igual a zero
+    </mat-error>
+    <mat-error *ngIf="form.get('quantidadeEstoque')?.hasError('notInteger')">
+      Quantidade deve ser um número inteiro
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" *ngIf="isEdit" class="example-full-width">
+    <mat-label>Data Última Venda</mat-label>
+    <input matInput [matDatepicker]="picker" formControlName="dataUltimaVenda" (dateChange)="onDateChange($event)">
+    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Categoria</mat-label>
+    <mat-select formControlName="idCategoria" required>
+      <mat-option *ngFor="let cat of categories" [value]="cat.id">{{ cat.descricao }}</mat-option>
+    </mat-select>
+    <mat-error *ngIf="form.get('idCategoria')?.hasError('required')">
+      Categoria é obrigatória
+    </mat-error>
+  </mat-form-field>
+
+  <!-- Só na edição -->
+
+  <div class="form-actions">
+    <button mat-flat-button color="success" type="submit" [disabled]="!form.valid">
+      {{ isEdit ? 'Atualizar' : 'Cadastrar' }}
+    </button>
+    <button mat-stroked-button color="info" type="button" (click)="cancel()">
+      Cancelar
+    </button>
+  </div>
+</form>

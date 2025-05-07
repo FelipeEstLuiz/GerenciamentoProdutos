@@ -62,13 +62,8 @@ WebApplication app = builder.Build();
 if (!app.Environment.IsProduction())
     DatabaseInitializer.InitializeAsync(builder.Configuration.GetConnectionString("DefaultConnection")!).GetAwaiter().GetResult();
 
-app.UseGlobalExceptionMiddleware();
-
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
-{
     app.UseDeveloperExceptionPage();
-}
 
 app.UseSwagger();
 app.UseSwaggerUI();
@@ -85,6 +80,8 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.UseResponseCompression();
+
+app.UseGlobalExceptionMiddleware();
 
 app.UseRouting()
     .UseEndpoints(r =>

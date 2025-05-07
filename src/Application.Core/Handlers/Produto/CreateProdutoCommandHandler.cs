@@ -20,7 +20,7 @@ public class CreateProdutoCommandHandler(
     {
         try
         {
-            IEnumerable<Domain.Entities.Produto> produtoPorNome = await produtoRepository.GetByNameAsync(request.Nome!, cancellationToken);
+            IEnumerable<Domain.Entities.Produto> produtoPorNome = await produtoRepository.GetAllAsync(null, request.Nome!, cancellationToken);
 
             if (produtoPorNome.Any(x => x.Nome == request.Nome!))
                 return Result<ProdutoVo>.Failure($"Já existe um produto cadastrado com o nome {request.Nome}");

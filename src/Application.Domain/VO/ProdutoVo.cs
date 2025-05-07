@@ -19,7 +19,7 @@ public class ProdutoVo
     public DateTime DataCadastro { get; private set; }
 
     [Newtonsoft.Json.JsonConverter(typeof(ConvertDateTime))]
-    public DateTime? DataUltimaAtualizacao { get; private set; }
+    public DateTime? DataUltimaVenda { get; private set; }
 
     public static ProdutoVo FromEntity(Produto produto, IEnumerable<CategoriaProduto> categorias) => new()
     {
@@ -31,6 +31,6 @@ public class ProdutoVo
         Categoria = categorias.FirstOrDefault(x => x.Id == produto.IdCategoria)?.Descricao,
         Status = produto.CodigoStatusProduto,
         DataCadastro = produto.DataCadastro,
-        DataUltimaAtualizacao = produto.DataUltimaVenda
+        DataUltimaVenda = produto.DataUltimaVenda
     };
 }

@@ -30,10 +30,6 @@ public class UpdateProdutoValidator : AbstractValidator<UpdateProdutoCommand>
            .NotEmpty().WithMessage("Obrigatorio")
            .GreaterThan(0).WithMessage("Invalido");
 
-        RuleFor(x => x.Status)
-           .NotEmpty().WithMessage("Obrigatorio")
-           .IsInEnum().WithMessage("Invalido");
-
         RuleFor(x => x.DataUltimaVenda)
            .LessThanOrEqualTo(DateTime.UtcNow).WithMessage("Nao pode ser posterior a data atual")
            .When(x => x.DataUltimaVenda.HasValue);

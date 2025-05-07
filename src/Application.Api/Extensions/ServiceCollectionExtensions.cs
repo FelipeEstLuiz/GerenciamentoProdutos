@@ -28,13 +28,13 @@ public static class ServiceCollectionExtensions
         services
             .ConfigureMvc()
             .ConfigureJwt(configuration)
+            .AddApplicationServices()
             .AddSwagger()
             .AddCompression()
             .AddHttpContextAccessor()
             .AddVersioning()
             .AddGlobalExceptionMiddleware()
-            .AddHttpClient()
-            .AddApplicationServices();
+            .AddHttpClient();
 
         return services;
     }
@@ -62,6 +62,9 @@ public static class ServiceCollectionExtensions
 
         return services;
     }
+
+    public static IServiceCollection AddGlobalExceptionMiddleware(this IServiceCollection services)
+        => services.AddTransient<GlobalExceptionHandlerMiddleware>();
 
     private static IServiceCollection ConfigureMvc(this IServiceCollection services)
     {
@@ -97,9 +100,6 @@ public static class ServiceCollectionExtensions
 
         return services;
     }
-
-    private static IServiceCollection AddGlobalExceptionMiddleware(this IServiceCollection services)
-        => services.AddTransient<GlobalExceptionHandlerMiddleware>();
 
     private static IServiceCollection AddCompression(this IServiceCollection services)
     {

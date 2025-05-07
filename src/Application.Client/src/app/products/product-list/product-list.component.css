@@ -1,0 +1,130 @@
+.filters-container {
+    display: flex;
+    gap: 16px;
+    align-items: center; /* Alinha verticalmente */
+    flex-wrap: wrap;
+    padding: 10px;
+    background: #fff;
+    border-radius: 18px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+    margin-bottom: 10px;
+  }
+  
+  .filter-field {
+    min-width: 220px;
+    max-width: 220px;
+    width: 220px;
+    margin: 20px 0px 0px 0px !important; /* Remove espaço extra embaixo */
+    display: flex;
+    align-items: center;
+  }
+  
+  button.filter-btn {
+    min-width: 120px;
+    height: 56px; /* Altura padrão do mat-form-field outline */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-weight: 500;
+    border-radius: 8px;
+    margin: 20px 0px 20px 0px !important;
+  }
+  
+  .mat-form-field {
+    margin-bottom: 0 !important; /* Remove o margin-bottom padrão */
+  }
+  
+  @media (max-width: 900px) {
+    .filters-container {
+      flex-direction: column;
+      align-items: stretch;
+    }
+    .filter-field, .filter-btn {
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+    }
+  }
+  
+  .spacer {
+    flex: 1 1 auto;
+  }
+
+  /* Força altura e remove padding do mat-form-field */
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-wrapper {
+    padding-bottom: 0 !important;
+    height: 56px !important; /* igual ao botão */
+    display: flex;
+    align-items: center;
+  }
+  
+  ::ng-deep .mat-form-field-appearance-outline .mat-form-field-flex {
+    align-items: center;
+    height: 56px !important;
+  }
+  
+  ::ng-deep .mat-form-field-appearance-outline .mat-form-field-infix {
+    padding: 0 !important;
+    display: flex;
+    align-items: center;
+    height: 56px !important;
+  }
+
+  ::ng-deep .mat-form-field {
+    margin-bottom: 0 !important;
+  }
+
+  /* Button Styles */
+::ng-deep button[mat-flat-button] {
+  min-width: 120px;
+  font-weight: 500;
+  border-radius: 8px;
+}
+
+::ng-deep button[mat-stroked-button] {
+  min-width: 120px;
+  font-weight: 500;
+  border-radius: 8px;
+}
+
+/* Primary Button (Search) */
+::ng-deep button[mat-flat-button][color="primary"] {
+  background-color: #3f51b5;
+  color: #fff;
+}
+
+::ng-deep button[mat-flat-button][color="primary"]:hover {
+  background-color: #303f9f;
+}
+
+/* Info Button (Clear) */
+::ng-deep button[mat-stroked-button][color="info"] {
+  border-color: #17a2b8;
+  color: #17a2b8;
+}
+
+::ng-deep button[mat-stroked-button][color="info"]:hover {
+  background-color: rgba(23, 162, 184, 0.1);
+  border-color: #138496;
+  color: #138496;
+}
+
+/* Success Button (New Product) */
+::ng-deep button[mat-flat-button][color="success"] {
+  background-color: #28a745;
+  color: #fff;
+}
+
+::ng-deep button[mat-flat-button][color="success"]:hover {
+  background-color: #218838;
+}
+
+/* Form Field Focus Styles */
+::ng-deep .mat-form-field-appearance-outline.mat-focused .mat-form-field-outline {
+  color: #3f51b5;
+}
+
+::ng-deep .mat-form-field.mat-focused .mat-form-field-label {
+  color: #3f51b5;
+}

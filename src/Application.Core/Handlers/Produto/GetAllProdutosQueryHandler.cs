@@ -19,7 +19,11 @@ public class GetAllProdutosQueryHandler(
     {
         try
         {
-            IEnumerable<Domain.Entities.Produto> produtos = await produtoRepository.GetAllAsync(cancellationToken);
+            IEnumerable<Domain.Entities.Produto> produtos = await produtoRepository.GetAllAsync(
+                request.IdCategoria,
+                request.Nome,
+                cancellationToken
+            );
 
             List<ProdutoVo> produtosVo = [];
 

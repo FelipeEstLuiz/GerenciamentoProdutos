@@ -39,7 +39,7 @@ public class UpdateProdutoCommandHandlerTests
     public async Task Handle_DeveRetornarFalha_SeProdutoNaoForEncontrado()
     {
         // Arrange
-        UpdateProdutoCommand command = new("Produto Atualizado", "Descrição", 100.50m, 10, 1, StatusProduto.Disponivel, null)
+        UpdateProdutoCommand command = new("Produto Atualizado", "Descrição", 100.50m, 10, 1,  null)
         {
             Id = 1
         };
@@ -60,7 +60,7 @@ public class UpdateProdutoCommandHandlerTests
     public async Task Handle_DeveRetornarFalha_SeProdutoComNomeDuplicadoExistir()
     {
         // Arrange
-        UpdateProdutoCommand command = new("Produto Duplicado", "Descrição", 100.50m, 10, 1, StatusProduto.Disponivel, null)
+        UpdateProdutoCommand command = new("Produto Duplicado", "Descrição", 100.50m, 10, 1,  null)
         {
             Id = 1
         };
@@ -70,7 +70,7 @@ public class UpdateProdutoCommandHandlerTests
             .Returns(new ProdutoEntity("Produto Original", "Descrição", 100.50m, 10, 1));
 
         _produtoRepositoryMock
-            .GetByNameAsync(command.Nome!, Arg.Any<CancellationToken>())
+            .GetAllAsync(null, command.Nome!, Arg.Any<CancellationToken>())
             .Returns([new(2, "Produto Duplicado", "Descrição", 100.50m, 10, 1, StatusProduto.Disponivel, DateTime.UtcNow)]);
 
         // Act
@@ -85,7 +85,7 @@ public class UpdateProdutoCommandHandlerTests
     public async Task Handle_DeveRetornarFalha_SeCategoriaForInvalida()
     {
         // Arrange
-        UpdateProdutoCommand command = new("Produto Atualizado", "Descrição", 100.50m, 10, 999, StatusProduto.Disponivel, null)
+        UpdateProdutoCommand command = new("Produto Atualizado", "Descrição", 100.50m, 10, 999,  null)
         {
             Id = 1
         };
@@ -95,7 +95,7 @@ public class UpdateProdutoCommandHandlerTests
             .Returns(new ProdutoEntity("Produto Original", "Descrição", 100.50m, 10, 1));
 
         _produtoRepositoryMock
-            .GetByNameAsync(command.Nome!, Arg.Any<CancellationToken>())
+            .GetAllAsync(null, command.Nome!, Arg.Any<CancellationToken>())
             .Returns([]);
 
         _categoriaCacheServiceMock
@@ -114,7 +114,7 @@ public class UpdateProdutoCommandHandlerTests
     public async Task Handle_DeveAtualizarProdutoComSucesso()
     {
         // Arrange
-        UpdateProdutoCommand command = new("Produto Atualizado", "Descrição", 100.50m, 10, 1, StatusProduto.Disponivel, null)
+        UpdateProdutoCommand command = new("Produto Atualizado", "Descrição", 100.50m, 10, 1,  null)
         {
             Id = 1
         };
@@ -126,7 +126,7 @@ public class UpdateProdutoCommandHandlerTests
             .Returns(new ProdutoEntity("Produto Original", "Descrição", 100.50m, 10, 1));
 
         _produtoRepositoryMock
-            .GetByNameAsync(command.Nome!, Arg.Any<CancellationToken>())
+            .GetAllAsync(null, command.Nome!, Arg.Any<CancellationToken>())
             .Returns([]);
 
         _categoriaCacheServiceMock
@@ -158,7 +158,7 @@ public class UpdateProdutoCommandHandlerTests
     public async Task Handle_DeveRetornarFalha_SeValidacaoExceptionForLancada()
     {
         // Arrange
-        UpdateProdutoCommand command = new("Produto Atualizado", "Descrição", 100.50m, 10, 1, StatusProduto.Disponivel, null)
+        UpdateProdutoCommand command = new("Produto Atualizado", "Descrição", 100.50m, 10, 1, null)
         {
             Id = 1
         };
@@ -186,7 +186,7 @@ public class UpdateProdutoCommandHandlerTests
     public async Task Handle_DeveRetornarFalha_SeErroInesperadoForLancado()
     {
         // Arrange
-        UpdateProdutoCommand command = new("Produto Atualizado", "Descrição", 100.50m, 10, 1, StatusProduto.Disponivel, null)
+        UpdateProdutoCommand command = new("Produto Atualizado", "Descrição", 100.50m, 10, 1, null)
         {
             Id = 1
         };

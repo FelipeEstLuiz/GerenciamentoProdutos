@@ -24,7 +24,7 @@ public class UpdateProdutoCommandHandler(
             if (produto is null)
                 return Result<ProdutoVo>.Failure("Produto não encontrado.");
 
-            IEnumerable<Domain.Entities.Produto> produtoPorNome = await produtoRepository.GetByNameAsync(request.Nome!, cancellationToken);
+            IEnumerable<Domain.Entities.Produto> produtoPorNome = await produtoRepository.GetAllAsync(null, request.Nome!, cancellationToken);
 
             if (produtoPorNome.Any(x => x.Nome == request.Nome! && x.Id != request.Id))
                 return Result<ProdutoVo>.Failure($"Já existe um produto cadastrado com o nome {request.Nome}");
@@ -40,7 +40,7 @@ public class UpdateProdutoCommandHandler(
                 request.Valor!.Value,
                 request.QuantidadeEstoque!.Value,
                 request.Categoria!.Value,
-                request.Status!.Value,
+                produto.CodigoStatusProduto,
                 request.DataUltimaVenda
             );
 
