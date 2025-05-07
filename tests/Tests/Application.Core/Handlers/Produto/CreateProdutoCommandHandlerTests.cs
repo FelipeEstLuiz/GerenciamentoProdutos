@@ -40,11 +40,18 @@ public class CreateProdutoCommandHandlerTests
     public async Task Handle_DeveRetornarFalha_SeProdutoJaExistir()
     {
         // Arrange
-        CreateProdutoCommand command = new("Produto Existente", "Descrição", 100.50m, 10, 1);
+
+        ProdutoEntity produto = CriarProduto.CriarProdutoTeste();
+
+        CreateProdutoCommand command = new(produto.Nome, produto.Descricao, produto.Valor, produto.QuantidadeEstoque, produto.IdCategoria);
+
+        _categoriaCacheServiceMock
+            .GetAllAsync(Arg.Any<CancellationToken>())
+            .Returns(CriarCategoria.CriarCategorias(1));
 
         _produtoRepositoryMock
             .GetAllAsync(Arg.Any<int?>(), command.Nome!, Arg.Any<CancellationToken>())
-            .Returns([CriarProduto.CriarProdutoTeste()]);
+            .Returns([produto]);
 
         // Act
         Result<ProdutoVo> result = await _handler.Handle(command, CancellationToken.None);

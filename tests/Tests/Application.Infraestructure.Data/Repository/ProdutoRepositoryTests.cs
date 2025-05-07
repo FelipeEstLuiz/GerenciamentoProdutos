@@ -80,7 +80,7 @@ public class ProdutoRepositoryTests : IClassFixture<SqlServerTestFixture>, IAsyn
         Produto produto = CriarProduto.CriarProdutoTeste();
         await _produtoRepository.AddAsync(produto, CancellationToken.None);
 
-        produto.Update("Produto Atualizado", "Descrição Atualizada", 200.00m, 20, 2, StatusProduto.Disponivel, DateTime.UtcNow.AddDays(-61));
+        produto.Update("Produto Atualizado", "Descrição Atualizada", 200.00m, 20, 2, StatusProduto.ForaEstoque, DateTime.UtcNow.AddDays(-61));
 
         // Act
         await _produtoRepository.UpdateAsync(produto, CancellationToken.None);
