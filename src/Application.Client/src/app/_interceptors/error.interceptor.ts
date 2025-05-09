@@ -1,10 +1,7 @@
 import { HttpInterceptorFn } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { LoadingService } from '../_services/loading.service';
-import {
-  HttpErrorResponse,
-  HttpEvent,
-} from '@angular/common/http';
+import { HttpErrorResponse, HttpEvent } from '@angular/common/http';
 import { catchError, finalize, map, throwError } from 'rxjs';
 import { Router } from '@angular/router';
 import { AccountService } from '../_services/account.service';
@@ -26,30 +23,25 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
     catchError((error: HttpErrorResponse) => {
       const responseBody = error.error;
 
-      console.log('aqui',error);
-
       let msg = 'Erro interno do servidor. Por favor, tente novamente mais tarde.';
 
-      if (error.status === 401) {        
+      if (error.status === 401) {    
+
         accountService.logout?.();
         localStorage.removeItem('user');
         router.navigate(['/']);
         msg = 'Sessão expirada. Faça login novamente.';
-      } else if (error.status === 0) {        
-        msg = 'Erro interno do servidor. Por favor, tente novamente mais tarde.';
+
+      } else if (error.status !== 0) {  
+
+        if (Array.isArray(responseBody)) {
+          msg = responseBody.join('\n');
+        } else if (responseBody && typeof responseBody === 'object' && 'errors' in responseBody) {
+          msg = (responseBody.errors || []).join('\n') || msg;
+        } else {
+          msg = error.message || error.statusText || msg;
+        }        
       } 
-      else if (Array.isArray(responseBody)) {
-        // Caso seja um array de mensagens
-        msg = responseBody.join('\n');
-      } else if (
-        responseBody &&
-        typeof responseBody === 'object' &&
-        'errors' in responseBody
-      ) {
-        msg = (responseBody.errors || []).join('\n') || msg;
-      } else {
-        msg = error.message || error.statusText || msg;
-      }
 
       alertService.error(msg);
       return throwError(() => msg);

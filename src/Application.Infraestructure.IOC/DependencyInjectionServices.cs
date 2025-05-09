@@ -10,7 +10,7 @@ public static class DependencyInjectionServices
     {
         services.AddScoped<IUsuarioCacheService, UsuarioCacheService>();
         services.AddScoped<ICategoriaCacheService, CategoriaCacheService>();
-        services.AddSingleton<ITokenService, TokenService>();
+        services.AddScoped<ITokenService, TokenService>();
         services.AddScoped<IProdutoResponseService, ProdutoResponseService>();
         return services;
     }

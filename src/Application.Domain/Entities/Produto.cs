@@ -5,7 +5,7 @@ namespace Application.Domain.Entities;
 
 public class Produto
 {
-    public Produto() { }
+    protected Produto() { }
 
     public Produto(
         string nome,
